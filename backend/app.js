@@ -1,12 +1,15 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
+const chartRoutes = require("./charts");
+
 const app = express();
-
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
+mongoose.connect("mongodb://127.0.0.1:27017/dashboardDB");
 
-app.listen(8082, () => console.log("Server running on port 5000"));
+app.use("/api/charts", chartRoutes);
+
+const PORT = 8083;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
